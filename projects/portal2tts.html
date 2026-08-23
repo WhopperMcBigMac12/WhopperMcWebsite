@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Portal 2 TTS | WhopperMcBigMac</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0b0b0f;
+            color: #f1f1f1;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(11, 11, 15, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #7c5cff;
+        }
+
+        .back-link {
+            color: #aaa;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .project-hero {
+            padding: 170px 0 70px;
+        }
+
+        .project-label {
+            color: #8d73ff;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .project-hero h1 {
+            font-size: clamp(50px, 8vw, 90px);
+            line-height: 1;
+            letter-spacing: -4px;
+            margin-bottom: 25px;
+        }
+
+        .project-description {
+            max-width: 750px;
+            color: #aaa;
+            font-size: 20px;
+        }
+
+        .hero-image {
+            margin-top: 50px;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #15151c;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #24242d;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content {
+            padding: 40px 0 100px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 70px;
+        }
+
+        .content h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            color: #aaa;
+            font-size: 17px;
+            margin-bottom: 25px;
+        }
+
+        .sidebar {
+            background: #131319;
+            border: 1px solid #24242c;
+            border-radius: 12px;
+            padding: 30px;
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #24242c;
+            color: #aaa;
+        }
+
+        .sidebar-item:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-item strong {
+            display: block;
+            color: white;
+            margin-bottom: 3px;
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .tag {
+            background: #24232d;
+            color: #aaa;
+            padding: 6px 11px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .screenshots {
+            margin-top: 80px;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .screenshot {
+            aspect-ratio: 16 / 9;
+            background: #15151c;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #24242d;
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .button {
+            padding: 12px 22px;
+            border-radius: 6px;
+            background: #7c5cff;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background: #967fff;
+            transform: translateY(-2px);
+        }
+
+        .button-outline {
+            background: transparent;
+            border: 1px solid #444;
+        }
+
+        .button-outline:hover {
+            background: #18181f;
+            border-color: #666;
+        }
+
+        footer {
+            border-top: 1px solid #22222a;
+            padding: 30px 0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 800px) {
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .screenshot-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-container">
+
+            <a href="../index.html" class="logo">
+                Whopper<span>McBigMac</span>
+            </a>
+
+            <a href="../index.html" class="back-link">
+                ← Back to Portfolio
+            </a>
+
+        </div>
+    </nav>
+
+
+    <main>
+
+        <section class="project-hero">
+
+            <div class="container">
+
+                <div class="project-label">
+                    C# • .NET • Portal 2 • TTS
+                </div>
+
+                <h1>
+                    Portal 2 TTS
+                </h1>
+
+                <p class="project-description">
+                    A custom text-to-speech system for Portal 2 that
+                    reads player chat aloud using custom voices.
+                </p>
+
+                <div class="hero-image">
+                    <img src="../images/portal2tts.jpg" alt="Portal 2 TTS">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="content">
+
+            <div class="container">
+
+                <div class="content-grid">
+
+                    <div>
+
+                        <h2>
+                            About the Project
+                        </h2>
+
+                        <p>
+                            Portal 2 TTS is a custom text-to-speech system
+                            designed to bring voice synthesis into Portal 2
+                            cooperative gameplay.
+                        </p>
+
+                        <p>
+                            The project combines Portal 2 VScript with a
+                            C# application that monitors the game's console
+                            output and processes player chat messages.
+                        </p>
+
+                        <p>
+                            The system can use custom speech models and
+                            voices, allowing chat to be spoken using
+                            character-inspired voices.
+                        </p>
+
+                        <p>
+                            The project has also been expanded to support
+                            locally running TTS models, allowing the system
+                            to operate without relying on an external
+                            online service.
+                        </p>
+
+                        <div class="buttons">
+
+                            <a href="https://github.com/WhopperMcBigMac12/Portal2TTS"
+                               class="button"
+                               target="_blank">
+                                View on GitHub
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <aside class="sidebar">
+
+                        <h3>
+                            Project Details
+                        </h3>
+
+                        <div class="sidebar-item">
+                            <strong>Language</strong>
+                            C#
+                        </div>
+
+                        <div class="sidebar-item">
+                            <strong>Framework</strong>
+                            .NET 8
+                        </div>
+
+                        <div class="sidebar-item">
+                            <strong>Game</strong>
+                            Portal 2
+                        </div>
+
+                        <div class="sidebar-item">
+                            <strong>Other Technologies</strong>
+                            VScript / Sherpa-ONNX
+                        </div>
+
+                        <div class="tags">
+                            <span class="tag">C#</span>
+                            <span class="tag">.NET</span>
+                            <span class="tag">VScript</span>
+                            <span class="tag">TTS</span>
+                            <span class="tag">AI</span>
+                        </div>
+
+                    </aside>
+
+                </div>
+
+
+                <div class="screenshots">
+
+                    <h2>
+                        Screenshots
+                    </h2>
+
+                    <div class="screenshot-grid">
+
+                        <div class="screenshot">
+                            <img src="../images/portal2tts.jpg"
+                                 alt="Portal 2 TTS screenshot">
+                        </div>
+
+                        <div class="screenshot">
+                            <img src="../images/portal2tts.jpg"
+                                 alt="Portal 2 TTS screenshot">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        © 2026 WhopperMcBigMac. All rights reserved.
+
+    </footer>
+
+</body>
+</html>
