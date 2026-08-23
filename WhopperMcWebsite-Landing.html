@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Your Name | Portfolio</title>
+
+    <style>
+        /* ==============================
+           GENERAL
+        ============================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0b0b0f;
+            color: #f1f1f1;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+
+        /* ==============================
+           NAVIGATION
+        ============================== */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(11, 11, 15, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #7c5cff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #aaa;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+
+        /* ==============================
+           HERO
+        ============================== */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: #5d3fd3;
+            border-radius: 50%;
+            filter: blur(180px);
+            opacity: 0.18;
+            top: -200px;
+            right: -150px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-small {
+            color: #8d73ff;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: clamp(55px, 9vw, 110px);
+            line-height: 0.95;
+            letter-spacing: -5px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: #7c5cff;
+        }
+
+        .hero-description {
+            max-width: 650px;
+            color: #aaa;
+            font-size: 20px;
+            margin-bottom: 35px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            padding: 13px 25px;
+            border-radius: 6px;
+            background: #7c5cff;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background: #967fff;
+            transform: translateY(-2px);
+        }
+
+        .button-outline {
+            background: transparent;
+            border: 1px solid #444;
+        }
+
+        .button-outline:hover {
+            background: #18181f;
+            border-color: #666;
+        }
+
+
+        /* ==============================
+           SECTIONS
+        ============================== */
+
+        section {
+            padding: 110px 0;
+        }
+
+        .section-title {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            color: #888;
+            max-width: 650px;
+            margin-bottom: 50px;
+        }
+
+
+        /* ==============================
+           ABOUT
+        ============================== */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .about-text p {
+            color: #aaa;
+            margin-bottom: 20px;
+            font-size: 17px;
+        }
+
+        .about-box {
+            background: #131319;
+            border: 1px solid #24242c;
+            border-radius: 12px;
+            padding: 35px;
+        }
+
+        .about-box h3 {
+            margin-bottom: 20px;
+        }
+
+        .about-box ul {
+            list-style: none;
+        }
+
+        .about-box li {
+            padding: 10px 0;
+            color: #aaa;
+            border-bottom: 1px solid #22222a;
+        }
+
+        .about-box li:last-child {
+            border-bottom: none;
+        }
+
+
+        /* ==============================
+           PROJECTS
+        ============================== */
+
+        .projects {
+            background: #0e0e13;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .project-card {
+            background: #15151c;
+            border: 1px solid #24242d;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: #51428a;
+        }
+
+        .project-image {
+            height: 260px;
+            background: linear-gradient(135deg, #252033, #111117);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 18px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 28px;
+        }
+
+        .project-content h3 {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .project-content p {
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: #24232d;
+            color: #aaa;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .project-link {
+            color: #927cff;
+            font-weight: bold;
+        }
+
+        .project-link:hover {
+            color: #b1a1ff;
+        }
+
+
+        /* ==============================
+           SKILLS
+        ============================== */
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .skill {
+            background: #15151c;
+            border: 1px solid #24242d;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            color: #bbb;
+            transition: 0.3s;
+        }
+
+        .skill:hover {
+            border-color: #51428a;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+
+        /* ==============================
+           CONTACT
+        ============================== */
+
+        .contact {
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .contact-content p {
+            color: #999;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        footer {
+            border-top: 1px solid #22222a;
+            padding: 30px 0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+
+        /* ==============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 800px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                letter-spacing: -3px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            section {
+                padding: 80px 0;
+            }
+
+            .hero-description {
+                font-size: 17px;
+            }
+
+            .section-title {
+                font-size: 34px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- ==============================
+         NAVIGATION
+    ============================== -->
+
+<nav>
+        <div class="nav-container">
+
+            <a href="#home" class="logo">
+                Whopper<span>McBigMac</span>
+            </a>
+
+            <ul class="nav-links">
+              <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+          </ul>
+
+  </div>
+</nav>
+
+
+    <!-- ==============================
+         HERO
+    ============================== -->
+
+    <section class="hero" id="home">
+
+        <div class="container">
+
+            <div class="hero-content">
+
+              <div class="hero-small">
+                    Developer • Creator • Programmer
+                </div>
+
+                <h1>
+                    Whopper<br>
+                    <span>McBigMac.</span>
+                </h1>
+
+                <p class="hero-description">
+                    I create games, software, and interactive experiences.
+                    Here's a collection of some of the things I've built.
+                </p>
+
+                <div class="buttons">
+
+                    <a href="#projects" class="button">
+                        View My Work
+                    </a>
+
+                    <a href="#contact" class="button button-outline">
+                        Contact Me
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==============================
+         ABOUT
+    ============================== -->
+
+    <section id="about">
+
+        <div class="container">
+
+            <div class="about-grid">
+
+                <div class="about-text">
+
+                    <h2 class="section-title">
+                        About Me
+                    </h2>
+
+                    <p>
+                        Hi! I'm Your Name. I'm a developer who enjoys
+                        creating games, experimenting with technology,
+                        and building interesting projects.
+                    </p>
+
+                    <p>
+                        I enjoy working on both technical and creative
+                        projects, from game development and programming
+                        to tools, mods, and interactive experiences.
+                    </p>
+
+                    <p>
+                        This portfolio is a collection of some of the
+                        projects I've worked on.
+                    </p>
+
+                </div>
+
+
+                <div class="about-box">
+
+                    <h3>
+                        What I Do
+                    </h3>
+
+                    <ul>
+                        <li>Game Development</li>
+                        <li>Programming</li>
+                        <li>3D / Interactive Projects</li>
+                        <li>Modding</li>
+                        <li>Software Development</li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==============================
+         PROJECTS
+    ============================== -->
+
+    <section class="projects" id="projects">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                Featured Projects
+            </h2>
+
+            <p class="section-subtitle">
+                A selection of projects I've worked on.
+                Click a project to learn more.
+            </p>
+
+
+            <div class="project-grid">
+
+
+                <!-- PROJECT 1 -->
+
+                <div class="project-card">
+
+                    <div class="project-image">
+                        <!--
+                        Replace this entire div with:
+
+                        <img src="images/project1.jpg"
+                             alt="Project 1 screenshot">
+                        -->
+
+                        Project Image
+                    </div>
+
+                    <div class="project-content">
+
+                        <h3>
+                            Project One
+                        </h3>
+
+                        <p>
+                            A short description of your project.
+                            Explain what it does and what you
+                            contributed to it.
+                        </p>
+
+                        <div class="tags">
+                            <span class="tag">C#</span>
+                            <span class="tag">Unity</span>
+                            <span class="tag">Game Dev</span>
+                        </div>
+
+                        <a href="#" class="project-link">
+                            View Project →
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROJECT 2 -->
+
+                <div class="project-card">
+
+                    <div class="project-image">
+                        Project Image
+                    </div>
+
+                    <div class="project-content">
+
+                        <h3>
+                            Project Two
+                        </h3>
+
+                        <p>
+                            A short description of your project.
+                            Explain what makes this project
+                            interesting.
+                        </p>
+
+                        <div class="tags">
+                            <span class="tag">C#</span>
+                            <span class="tag">.NET</span>
+                            <span class="tag">Tools</span>
+                        </div>
+
+                        <a href="#" class="project-link">
+                            View Project →
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROJECT 3 -->
+
+                <div class="project-card">
+
+                    <div class="project-image">
+                        Project Image
+                    </div>
+
+                    <div class="project-content">
+
+                        <h3>
+                            Project Three
+                        </h3>
+
+                        <p>
+                            A short description of your project.
+                            Include the goal of the project and
+                            the technologies you used.
+                        </p>
+
+                        <div class="tags">
+                            <span class="tag">Unreal Engine</span>
+                            <span class="tag">Blueprints</span>
+                        </div>
+
+                        <a href="#" class="project-link">
+                            View Project →
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROJECT 4 -->
+
+                <div class="project-card">
+
+                    <div class="project-image">
+                        Project Image
+                    </div>
+
+                    <div class="project-content">
+
+                        <h3>
+                            Project Four
+                        </h3>
+
+                        <p>
+                            Another project can go here. You can
+                            add as many project cards as you want.
+                        </p>
+
+                        <div class="tags">
+                            <span class="tag">Minecraft</span>
+                            <span class="tag">Java</span>
+                            <span class="tag">Modding</span>
+                        </div>
+
+                        <a href="#" class="project-link">
+                            View Project →
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==============================
+         SKILLS
+    ============================== -->
+
+    <section id="skills">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                Skills and Technologies
+            </h2>
+
+            <p class="section-subtitle">
+                Some of the tools and technologies I work with.
+            </p>
+
+
+            <div class="skills-grid">
+
+                <div class="skill">
+                    C#
+                </div>
+
+                <div class="skill">
+                    C++
+                </div>
+
+                <div class="skill">
+                    C / C++
+                </div>
+
+                <div class="skill">
+                    HTML / CSS
+                </div>
+
+                <div class="skill">
+                    JavaScript
+                </div>
+
+                <div class="skill">
+                    Unreal Engine
+                </div>
+
+                <div class="skill">
+                    Unity
+                </div>
+
+                <div class="skill">
+                    Git / GitHub
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==============================
+         CONTACT
+    ============================== -->
+
+    <section class="contact" id="contact">
+
+        <div class="container">
+
+            <div class="contact-content">
+
+                <h2 class="section-title">
+                    Let's Connect
+                </h2>
+
+                <p>
+                    Interested in working together, discussing a project,
+                    or just want to get in touch?
+                </p>
+
+                <div class="contact-links">
+
+                    <a href="mailto:you@example.com" class="button">
+                        Email Me
+                    </a>
+
+                    <a href="#" class="button button-outline">
+                        GitHub
+                    </a>
+
+                    <a href="#" class="button button-outline">
+                        LinkedIn
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==============================
+         FOOTER
+    ============================== -->
+
+    <footer>
+
+        <div class="container">
+
+            © 2026 Your Name. All rights reserved.
+
+        </div>
+
+    </footer>
+
+
+</body>
+</html>
