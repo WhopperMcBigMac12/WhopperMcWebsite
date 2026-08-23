@@ -315,7 +315,7 @@
         ============================== */
 
         .projects {
-            rgba(14, 14, 19, 0.82);;
+            background: rgba(14, 14, 19, 0.82);
         }
 
         .project-grid {
@@ -325,21 +325,28 @@
         }
 
         .project-card {
+            display: block;
             background: #15151c;
             border: 1px solid #24242d;
             border-radius: 12px;
             overflow: hidden;
-            transition: 0.3s;
+
+            transition:
+                transform 0.35s ease,
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
         }
 
         .project-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-8px);
             border-color: #51428a;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
         }
 
         .project-image {
             aspect-ratio: 16 / 9;
             background: linear-gradient(135deg, #252033, #111117);
+
             display: flex;
             align-items: center;
             justify-content: center;
@@ -352,6 +359,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.04);
         }
 
         .project-content {
@@ -381,15 +393,20 @@
             padding: 5px 10px;
             border-radius: 4px;
             font-size: 13px;
+
+            transition:
+                background 0.3s ease,
+                color 0.3s ease,
+                transform 0.3s ease;
+        }
+
+        .project-card:hover .tag {
+            background: #302b43;
         }
 
         .project-link {
             color: #927cff;
             font-weight: bold;
-        }
-
-        .project-link:hover {
-            color: #b1a1ff;
         }
 
 
@@ -410,13 +427,19 @@
             border-radius: 8px;
             text-align: center;
             color: #bbb;
-            transition: 0.3s;
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                color 0.3s ease,
+                box-shadow 0.3s ease;
         }
 
         .skill:hover {
             border-color: #51428a;
             color: white;
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
 
@@ -459,6 +482,7 @@
             font-size: 14px;
         }
 
+
         /* ==============================
            ANIMATIONS
         ============================== */
@@ -466,6 +490,7 @@
         .animate {
             opacity: 0;
             transform: translateY(35px);
+
             transition:
                 opacity 0.8s ease,
                 transform 0.8s ease;
@@ -534,42 +559,6 @@
             }
         }
 
-        .project-card {
-            transition:
-                transform 0.35s ease,
-                border-color 0.35s ease,
-                box-shadow 0.35s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            border-color: #51428a;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-        }
-
-        .project-image img {
-            transition: transform 0.5s ease;
-        }
-
-        .project-card:hover .project-image img {
-            transform: scale(1.04);
-        }
-
-        .skill {
-            transition:
-                transform 0.3s ease,
-                border-color 0.3s ease,
-                color 0.3s ease,
-                box-shadow 0.3s ease;
-        }
-
-        .skill:hover {
-            border-color: #51428a;
-            color: white;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
         .button {
             transition:
                 background 0.3s ease,
@@ -603,18 +592,10 @@
             width: 100%;
         }
 
-        .tag {
-            transition:
-                background 0.3s ease,
-                color 0.3s ease,
-                transform 0.3s ease;
-        }
 
-        .tag:hover {
-            background: #302b43;
-            color: #ddd;
-            transform: translateY(-2px);
-        }
+        /* ==============================
+           REDUCED MOTION
+        ============================== */
 
         @media (prefers-reduced-motion: reduce) {
 
@@ -630,6 +611,8 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+
         /* ==============================
            MOBILE
         ============================== */
@@ -706,6 +689,8 @@
                 width: 75%;
             }
         }
+
+
         /* ==============================
            SPACE BACKGROUND
         ============================== */
@@ -719,6 +704,8 @@
             pointer-events: none;
             z-index: -1;
         }
+
+
         /* ==============================
            BACKGROUND STARS
         ============================== */
@@ -756,6 +743,11 @@
                 opacity: 0.6;
             }
         }
+
+
+        /* ==============================
+           SHOOTING STARS
+        ============================== */
 
         .shooting-star {
             position: absolute;
@@ -1003,6 +995,7 @@
 </head>
 
 <body>
+
     <!-- ==============================
          SPACE BACKGROUND
     ============================== -->
@@ -1017,6 +1010,7 @@
         <span class="shooting-star star-4"></span>
 
     </div>
+
 
     <!-- ==============================
          NAVIGATION
@@ -1033,19 +1027,27 @@
             <ul class="nav-links">
 
                 <li>
-                    <a href="#about">About</a>
+                    <a href="#about">
+                        About
+                    </a>
                 </li>
 
                 <li>
-                    <a href="#projects">Projects</a>
+                    <a href="#projects">
+                        Projects
+                    </a>
                 </li>
 
                 <li>
-                    <a href="#skills">Skills</a>
+                    <a href="#skills">
+                        Skills
+                    </a>
                 </li>
 
                 <li>
-                    <a href="#contact">Contact</a>
+                    <a href="#contact">
+                        Contact
+                    </a>
                 </li>
 
             </ul>
@@ -1098,7 +1100,10 @@
 
                 <div class="hero-logo">
 
-                    <img src="images/logo.png" alt="WhopperMcBigMac Logo">
+                    <img
+                        src="images/logo.png"
+                        alt="WhopperMcBigMac Logo"
+                    >
 
                 </div>
 
@@ -1206,12 +1211,17 @@
 
                 <!-- PROJECT 1 -->
 
-                <div class="project-card">
+                <a
+                    href="projects/tornado.html"
+                    class="project-card"
+                >
 
                     <div class="project-image">
 
-                        <img src="images/project1.png"
-                             alt="Tornado Mod screenshot">
+                        <img
+                            src="images/project1.png"
+                            alt="Tornado Mod screenshot"
+                        >
 
                     </div>
 
@@ -1242,24 +1252,28 @@
 
                         </div>
 
-                        <a href="projects/tornado.html"
-                           class="project-link">
+                        <span class="project-link">
                             View Project →
-                        </a>
+                        </span>
 
                     </div>
 
-                </div>
+                </a>
 
 
                 <!-- PROJECT 2 -->
 
-                <div class="project-card">
+                <a
+                    href="projects/portal2tts.html"
+                    class="project-card"
+                >
 
                     <div class="project-image">
 
-                        <img src="images/project2.png"
-                             alt="Portal 2 TTS screenshot">
+                        <img
+                            src="images/project2.png"
+                            alt="Portal 2 TTS screenshot"
+                        >
 
                     </div>
 
@@ -1291,19 +1305,21 @@
 
                         </div>
 
-                        <a href="projects/portal2tts.html"
-                           class="project-link">
+                        <span class="project-link">
                             View Project →
-                        </a>
+                        </span>
 
                     </div>
 
-                </div>
+                </a>
 
 
                 <!-- PROJECT 3 -->
 
-                <div class="project-card">
+                <a
+                    href="Unavailable"
+                    class="project-card"
+                >
 
                     <div class="project-image">
                         Coming soon!
@@ -1333,19 +1349,21 @@
 
                         </div>
 
-                        <a href="projects/portal2tts.html"
-                           class="project-link">
+                        <span class="project-link">
                             View Project →
-                        </a>
+                        </span>
 
                     </div>
 
-                </div>
+                </a>
 
 
                 <!-- PROJECT 4 -->
 
-                <div class="project-card">
+                <a
+                    href="Unavailable"
+                    class="project-card"
+                >
 
                     <div class="project-image">
                         Coming soon!
@@ -1375,14 +1393,13 @@
 
                         </div>
 
-                        <a href="projects/portal2tts.html"
-                           class="project-link">
+                        <span class="project-link">
                             View Project →
-                        </a>
+                        </span>
 
                     </div>
 
-                </div>
+                </a>
 
 
             </div>
@@ -1471,13 +1488,17 @@
 
                 <div class="contact-links">
 
-                    <a href="mailto:WhopperMcBigMac12@gmail.com"
-                       class="button">
+                    <a
+                        href="mailto:WhopperMcBigMac12@gmail.com"
+                        class="button"
+                    >
                         Email Me
                     </a>
 
-                    <a href="https://github.com/WhopperMcBigMac12"
-                       class="button button-outline">
+                    <a
+                        href="https://github.com/WhopperMcBigMac12"
+                        class="button button-outline"
+                    >
                         GitHub
                     </a>
 
@@ -1498,14 +1519,19 @@
 
         <div class="container">
 
-            I would put copyright information here but I have no idea
-            what I'm doing.
+            © 2026 WhopperMcBigMac. All rights reserved.
 
         </div>
 
     </footer>
 
+
+    <!-- ==============================
+         SCROLL ANIMATIONS
+    ============================== -->
+
     <script>
+
         const animatedElements = document.querySelectorAll(
             ".section-title, .section-subtitle, .about-text, .about-box, .project-card, .skill, .contact-content"
         );
@@ -1514,26 +1540,34 @@
             element.classList.add("animate");
         });
 
+
         const observer = new IntersectionObserver(
             (entries) => {
+
                 entries.forEach((entry) => {
 
                     if (entry.isIntersecting) {
+
                         entry.target.classList.add("visible");
+
                         observer.unobserve(entry.target);
 
                     }
 
                 });
+
             },
             {
                 threshold: 0.15
             }
         );
 
+
         animatedElements.forEach((element) => {
             observer.observe(element);
         });
+
     </script>
+
 </body>
 </html>
