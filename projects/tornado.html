@@ -279,6 +279,220 @@
                 grid-template-columns: 1fr;
             }
         }
+	/* ==============================
+   ANIMATIONS
+============================== */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ==============================
+   PAGE LOAD
+============================== */
+
+nav {
+    animation: navFade 0.8s ease forwards;
+}
+
+.project-label {
+    animation: heroFadeUp 0.7s ease 0.1s both;
+}
+
+.project-hero h1 {
+    animation: heroFadeUp 0.9s ease 0.2s both;
+}
+
+.project-description {
+    animation: heroFadeUp 0.9s ease 0.35s both;
+}
+
+.hero-image {
+    animation: heroImageIn 1s ease 0.5s both;
+}
+
+@keyframes heroFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroImageIn {
+    from {
+        opacity: 0;
+        transform: translateY(35px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes navFade {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==============================
+   HERO IMAGE
+============================== */
+
+.hero-image img {
+    transition:
+        transform 0.7s ease,
+        filter 0.7s ease;
+}
+
+.hero-image:hover img {
+    transform: scale(1.025);
+    filter: brightness(1.05);
+}
+
+
+/* ==============================
+   SIDEBAR
+============================== */
+
+.sidebar {
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.sidebar:hover {
+    transform: translateY(-5px);
+    border-color: #3c315f;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ==============================
+   SCREENSHOTS
+============================== */
+
+.screenshot {
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.screenshot:hover {
+    transform: translateY(-5px);
+    border-color: #51428a;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.screenshot img {
+    transition:
+        transform 0.6s ease,
+        filter 0.6s ease;
+}
+
+.screenshot:hover img {
+    transform: scale(1.04);
+    filter: brightness(1.06);
+}
+
+
+/* ==============================
+   VIDEO
+============================== */
+
+.video {
+    transition:
+        transform 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.video:hover {
+    transform: translateY(-5px);
+    border-color: #51428a;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ==============================
+   TAGS
+============================== */
+
+.tag {
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.tag:hover {
+    background: #302c40;
+    color: white;
+    transform: translateY(-2px);
+}
+
+
+/* ==============================
+   BUTTONS
+============================== */
+
+.button {
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.button:hover {
+    box-shadow: 0 8px 25px rgba(124, 92, 255, 0.2);
+}
+
+
+/* ==============================
+   REDUCED MOTION
+============================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
     </style>
 </head>
 
@@ -464,6 +678,32 @@
         © 2026 WhopperMcBigMac. All rights reserved.
 
     </footer>
+<script>
+    const revealElements = document.querySelectorAll(
+        '.content-grid, .screenshots, .screenshot, .video'
+    );
 
+    revealElements.forEach(element => {
+        element.classList.add('reveal');
+    });
+
+    const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+    revealElements.forEach(element => {
+        revealObserver.observe(element);
+    });
+</script>
 </body>
 </html>
