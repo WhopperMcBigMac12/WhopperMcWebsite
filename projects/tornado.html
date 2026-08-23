@@ -204,6 +204,30 @@
             height: 100%;
             object-fit: cover;
         }
+		.video {
+    		aspect-ratio: 16 / 9;
+    		background: #15151c;
+    		border-radius: 10px;
+    		overflow: hidden;
+    		border: 1px solid #24242d;
+			align-content: center;
+			align-self: center
+		}
+
+		.video video {
+    		width: 100%;
+    		height: 100%;
+    		display: block;
+    		object-fit: cover;
+			align-content: center;
+			align-self: center
+		}
+		.screenshot-grid .video:only-child {
+    		grid-column: 1 / -1;
+    		width: 100%;
+    		max-width: 700px;
+    		margin: 0 auto;
+		}
 
         .buttons {
             display: flex;
@@ -296,7 +320,7 @@
                 </p>
 
                 <div class="hero-image">
-                    <img src="../images/tornado.jpg" alt="UE4 Tornado">
+                    <img src="../images/project1.png" alt="UE4 Tornado">
                 </div>
 
             </div>
@@ -415,6 +439,20 @@
                 </div>
 
             </div>
+		<h2 style="text-align: center;">
+        Videos
+    </h2>
+
+    <div class="screenshot-grid">
+
+        <div class="video">
+            <video controls preload="metadata">
+                <source src="../videos/portal2tts-demo.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+        </div>
+
+    </div>
 
         </section>
 

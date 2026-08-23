@@ -203,6 +203,30 @@
             height: 100%;
             object-fit: cover;
         }
+		.video {
+    		aspect-ratio: 16 / 9;
+    		background: #15151c;
+    		border-radius: 10px;
+    		overflow: hidden;
+    		border: 1px solid #24242d;
+			align-content: center;
+			align-self: center
+}
+
+		.video video {
+    		width: 100%;
+    		height: 100%;
+    		display: block;
+    		object-fit: cover;
+			align-content: center;
+			align-self: center
+		}
+		.screenshot-grid .video:only-child {
+    		grid-column: 1 / -1;
+    		width: 100%;
+    		max-width: 700px;
+    		margin: 0 auto;
+		}
 
         .buttons {
             display: flex;
@@ -294,7 +318,7 @@
                 </p>
 
                 <div class="hero-image">
-                    <img src="../images/portal2tts.jpg" alt="Portal 2 TTS">
+                    <img src="../images/project2.png" alt="Portal 2 TTS">
                 </div>
 
             </div>
@@ -383,7 +407,6 @@
                             <span class="tag">.NET</span>
                             <span class="tag">VScript</span>
                             <span class="tag">TTS</span>
-                            <span class="tag">AI</span>
                         </div>
 
                     </aside>
@@ -400,7 +423,7 @@
                     <div class="screenshot-grid">
 
                         <div class="screenshot">
-                            <img src="../images/portal2tts.jpg"
+                            <img src="../images/Portal2TTS1.png"
                                  alt="Portal 2 TTS screenshot">
                         </div>
 
@@ -412,6 +435,24 @@
                     </div>
 
                 </div>
+				<section class="screenshots">
+
+    <h2 style="text-align: center;">
+        Videos
+    </h2>
+
+    <div class="screenshot-grid">
+
+        <div class="video">
+            <video controls preload="metadata">
+                <source src="../videos/portal2tts-demo.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+        </div>
+
+    </div>
+
+</section>
 
             </div>
 
