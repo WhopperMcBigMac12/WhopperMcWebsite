@@ -116,9 +116,17 @@
             right: -150px;
         }
 
+        .hero-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 80px;
+        }
+
         .hero-content {
             position: relative;
             z-index: 1;
+            flex: 1;
         }
 
         .hero-small {
@@ -146,6 +154,66 @@
             color: #aaa;
             font-size: 20px;
             margin-bottom: 35px;
+        }
+
+        .hero-logo {
+            position: relative;
+            z-index: 1;
+            flex: 0 0 380px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                black 0%,
+                black 70%,
+                rgba(0, 0, 0, 0.85) 82%,
+                rgba(0, 0, 0, 0.45) 93%,
+                transparent 100%
+            );
+
+            mask-image: linear-gradient(
+                to bottom,
+                black 0%,
+                black 70%,
+                rgba(0, 0, 0, 0.85) 82%,
+                rgba(0, 0, 0, 0.45) 93%,
+                transparent 100%
+            );
+        }
+
+        .hero-logo::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: #7c5cff;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.18;
+            z-index: -1;
+        }
+
+        .hero-logo img {
+            width: 100%;
+            max-width: 380px;
+            height: auto;
+            display: block;
+
+            animation: logoFloat 5s ease-in-out infinite;
+
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.35));
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
         }
 
         .buttons {
@@ -270,21 +338,21 @@
         }
 
         .project-image {
-    aspect-ratio: 16 / 9;
-    background: linear-gradient(135deg, #252033, #111117);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #777;
-    font-size: 18px;
-    overflow: hidden;
-}
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, #252033, #111117);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 18px;
+            overflow: hidden;
+        }
 
-.project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
         .project-content {
             padding: 28px;
@@ -402,8 +470,30 @@
                 display: none;
             }
 
+            .hero-layout {
+                flex-direction: column;
+                text-align: center;
+                gap: 50px;
+            }
+
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
             .hero h1 {
                 letter-spacing: -3px;
+            }
+
+            .hero-description {
+                text-align: center;
+            }
+
+            .hero-logo {
+                flex: none;
+                width: 65%;
+                max-width: 300px;
             }
 
             .about-grid {
@@ -441,223 +531,11 @@
             .project-image {
                 height: 200px;
             }
+
+            .hero-logo {
+                width: 75%;
+            }
         }
-	/* ==============================
-   ANIMATIONS
-============================== */
-
-/* Elements start hidden before entering the viewport */
-.reveal {
-    opacity: 0;
-    transform: translateY(35px);
-    transition:
-        opacity 0.8s ease,
-        transform 0.8s ease;
-}
-
-/* JavaScript adds this when visible */
-.reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-
-/* ==============================
-   PAGE LOAD
-============================== */
-
-nav {
-    animation: navFade 0.8s ease forwards;
-}
-
-.hero-small {
-    animation: heroFadeUp 0.8s ease 0.15s both;
-}
-
-.hero h1 {
-    animation: heroFadeUp 0.9s ease 0.25s both;
-}
-
-.hero-description {
-    animation: heroFadeUp 0.9s ease 0.4s both;
-}
-
-.hero .buttons {
-    animation: heroFadeUp 0.9s ease 0.55s both;
-}
-
-@keyframes heroFadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes navFade {
-    from {
-        opacity: 0;
-        transform: translateY(-15px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-/* ==============================
-   HERO GLOW
-============================== */
-
-.hero::before {
-    animation: glowFloat 8s ease-in-out infinite alternate;
-}
-
-@keyframes glowFloat {
-    from {
-        transform: translate(0, 0) scale(1);
-    }
-
-    to {
-        transform: translate(-40px, 30px) scale(1.1);
-    }
-}
-
-
-/* ==============================
-   PROJECT CARDS
-============================== */
-
-.project-card {
-    transition:
-        transform 0.35s ease,
-        border-color 0.35s ease,
-        box-shadow 0.35s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-8px);
-    border-color: #51428a;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-}
-
-.project-image img {
-    transition:
-        transform 0.6s ease,
-        filter 0.6s ease;
-}
-
-.project-card:hover .project-image img {
-    transform: scale(1.05);
-    filter: brightness(1.08);
-}
-
-
-/* ==============================
-   SKILLS
-============================== */
-
-.skill {
-    transition:
-        transform 0.35s ease,
-        border-color 0.35s ease,
-        background 0.35s ease,
-        color 0.35s ease;
-}
-
-.skill:hover {
-    border-color: #51428a;
-    color: white;
-    background: #18181f;
-    transform: translateY(-5px);
-}
-
-
-/* ==============================
-   BUTTONS
-============================== */
-
-.button {
-    transition:
-        transform 0.3s ease,
-        background 0.3s ease,
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
-}
-
-.button:hover {
-    box-shadow: 0 8px 25px rgba(124, 92, 255, 0.2);
-}
-
-
-/* ==============================
-   ABOUT BOX
-============================== */
-
-.about-box {
-    transition:
-        transform 0.35s ease,
-        border-color 0.35s ease,
-        box-shadow 0.35s ease;
-}
-
-.about-box:hover {
-    transform: translateY(-5px);
-    border-color: #3c315f;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-}
-
-
-/* ==============================
-   NAV LINKS
-============================== */
-
-.nav-links a {
-    position: relative;
-}
-
-.nav-links a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 0;
-    height: 1px;
-    background: #7c5cff;
-    transition: width 0.3s ease;
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-
-/* ==============================
-   REDUCED MOTION
-============================== */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-
-    .reveal {
-        opacity: 1;
-        transform: none;
-    }
-}
     </style>
 </head>
 
@@ -668,7 +546,8 @@ nav {
          NAVIGATION
     ============================== -->
 
-<nav>
+    <nav>
+
         <div class="nav-container">
 
             <a href="#home" class="logo">
@@ -676,14 +555,28 @@ nav {
             </a>
 
             <ul class="nav-links">
-              <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
-          </ul>
 
-  </div>
-</nav>
+                <li>
+                    <a href="#about">About</a>
+                </li>
+
+                <li>
+                    <a href="#projects">Projects</a>
+                </li>
+
+                <li>
+                    <a href="#skills">Skills</a>
+                </li>
+
+                <li>
+                    <a href="#contact">Contact</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
 
 
     <!-- ==============================
@@ -694,31 +587,42 @@ nav {
 
         <div class="container">
 
-            <div class="hero-content">
+            <div class="hero-layout">
 
-              <div class="hero-small">
-                    Developer • Creator • Programmer
+                <div class="hero-content">
+
+                    <div class="hero-small">
+                        Developer • Creator • Programmer
+                    </div>
+
+                    <h1>
+                        Whopper<br>
+                        <span>McBigMac.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        I create games, software, and interactive experiences.
+                        Here's a collection of some of the things I've built.
+                    </p>
+
+                    <div class="buttons">
+
+                        <a href="#projects" class="button">
+                            View My Work
+                        </a>
+
+                        <a href="#contact" class="button button-outline">
+                            Contact Me
+                        </a>
+
+                    </div>
+
                 </div>
 
-                <h1>
-                    Whopper<br>
-                    <span>McBigMac.</span>
-                </h1>
 
-                <p class="hero-description">
-                    I create games, software, and interactive experiences.
-                    Here's a collection of some of the things I've built.
-                </p>
+                <div class="hero-logo">
 
-                <div class="buttons">
-
-                    <a href="#projects" class="button">
-                        View My Work
-                    </a>
-
-                    <a href="#contact" class="button button-outline">
-                        Contact Me
-                    </a>
+                    <img src="images/logo.png" alt="WhopperMcBigMac Logo">
 
                 </div>
 
@@ -741,12 +645,14 @@ nav {
 
                 <div class="about-text">
 
-                  <h2 class="section-title">
+                    <h2 class="section-title">
                         About Me
                     </h2>
 
                     <p>
-                  Hello! WhopperMcBigMac here, developer by passion. I mod and create games with my free time.&nbsp;&nbsp; </p>
+                        Hello! WhopperMcBigMac here, developer by passion.
+                        I mod and create games with my free time.
+                    </p>
 
                     <p>
                         I enjoy working on both technical and creative
@@ -769,11 +675,27 @@ nav {
                     </h3>
 
                     <ul>
-                        <li>Game Development</li>
-                        <li>Programming</li>
-                        <li>3D / Interactive Projects</li>
-                        <li>Modding</li>
-                        <li>Software Development</li>
+
+                        <li>
+                            Game Development
+                        </li>
+
+                        <li>
+                            Programming
+                        </li>
+
+                        <li>
+                            3D / Interactive Projects
+                        </li>
+
+                        <li>
+                            Modding
+                        </li>
+
+                        <li>
+                            Software Development
+                        </li>
+
                     </ul>
 
                 </div>
@@ -811,8 +733,12 @@ nav {
                 <div class="project-card">
 
                     <div class="project-image">
-    <img src="images/project1.png" alt="Project 1 screenshot">
+
+                        <img src="images/project1.png"
+                             alt="Tornado Mod screenshot">
+
                     </div>
+
                     <div class="project-content">
 
                         <h3>
@@ -820,17 +746,29 @@ nav {
                         </h3>
 
                         <p>
-                            Tornado mod made with BRMK for BrickRigs. All blueprint-made. Not complete. (Yet!)
+                            Tornado mod made with BRMK for BrickRigs.
+                            All blueprint-made. Not complete. (Yet!)
                         </p>
 
                         <div class="tags">
-                            <span class="tag">UE4</span>
-                            <span class="tag">Blueprints</span>
-							<span class="tag">Mod</span>
+
+                            <span class="tag">
+                                UE4
+                            </span>
+
+                            <span class="tag">
+                                Blueprints
+                            </span>
+
+                            <span class="tag">
+                                Mod
+                            </span>
+
                         </div>
 
-                        <a href="projects/tornado.html" class="project-link">
-                          View Project →
+                        <a href="projects/tornado.html"
+                           class="project-link">
+                            View Project →
                         </a>
 
                     </div>
@@ -843,7 +781,10 @@ nav {
                 <div class="project-card">
 
                     <div class="project-image">
-    <img src="images/project2.png" alt="Project 1 screenshot">
+
+                        <img src="images/project2.png"
+                             alt="Portal 2 TTS screenshot">
+
                     </div>
 
                     <div class="project-content">
@@ -853,18 +794,31 @@ nav {
                         </h3>
 
                         <p>
-                            Simple chat Text to Speech (TTS) mod for Portal 2. Supports default windows TTS voices and GLaDOS voice.
+                            Simple chat Text to Speech (TTS) mod for
+                            Portal 2. Supports default Windows TTS voices
+                            and GLaDOS voice.
                         </p>
 
                         <div class="tags">
-                            <span class="tag">C#</span>
-                            <span class="tag">.NET</span>
-                            <span class="tag">Mod</span>
+
+                            <span class="tag">
+                                C#
+                            </span>
+
+                            <span class="tag">
+                                .NET
+                            </span>
+
+                            <span class="tag">
+                                Mod
+                            </span>
+
                         </div>
 
-                        <a href="projects/portal2tts.html" class="project-link">
-    View Project →
-</a>
+                        <a href="projects/portal2tts.html"
+                           class="project-link">
+                            View Project →
+                        </a>
 
                     </div>
 
@@ -885,19 +839,28 @@ nav {
                             Coming Soon!
                         </h3>
 
-                        <p>
-                            
-                        </p>
+                        <p></p>
 
                         <div class="tags">
-                            <span class="tag">UE4</span>
-                            <span class="tag">Blueprints</span>
-							<span class="tag">Mod</span>
+
+                            <span class="tag">
+                                UE4
+                            </span>
+
+                            <span class="tag">
+                                Blueprints
+                            </span>
+
+                            <span class="tag">
+                                Mod
+                            </span>
+
                         </div>
 
-                        <a href="projects/portal2tts.html" class="project-link">
-    View Project →
-</a>
+                        <a href="projects/portal2tts.html"
+                           class="project-link">
+                            View Project →
+                        </a>
 
                     </div>
 
@@ -909,7 +872,7 @@ nav {
                 <div class="project-card">
 
                     <div class="project-image">
-                        Coming Soon!
+                        Coming soon!
                     </div>
 
                     <div class="project-content">
@@ -918,19 +881,28 @@ nav {
                             Coming Soon!
                         </h3>
 
-                        <p>
-                            
-                        </p>
+                        <p></p>
 
                         <div class="tags">
-                            <span class="tag">Will</span>
-                            <span class="tag">Come</span>
-                            <span class="tag">Soon!</span>
+
+                            <span class="tag">
+                                Will
+                            </span>
+
+                            <span class="tag">
+                                Come
+                            </span>
+
+                            <span class="tag">
+                                Soon!
+                            </span>
+
                         </div>
 
-                        <a href="projects/portal2tts.html" class="project-link">
-    View Project →
-</a>
+                        <a href="projects/portal2tts.html"
+                           class="project-link">
+                            View Project →
+                        </a>
 
                     </div>
 
@@ -1023,11 +995,13 @@ nav {
 
                 <div class="contact-links">
 
-                    <a href="mailto:WhopperMcBigMac12@gmail.com" class="button">
+                    <a href="mailto:WhopperMcBigMac12@gmail.com"
+                       class="button">
                         Email Me
                     </a>
 
-                    <a href="https://github.com/WhopperMcBigMac12" class="button button-outline">
+                    <a href="https://github.com/WhopperMcBigMac12"
+                       class="button button-outline">
                         GitHub
                     </a>
 
@@ -1048,36 +1022,13 @@ nav {
 
         <div class="container">
 
-        I would put copyright information here but I have no idea what I'm doing.&nbsp; </div>
+            I would put copyright information here but I have no idea
+            what I'm doing.
+
+        </div>
 
     </footer>
 
-<script>
-    const revealElements = document.querySelectorAll(
-        '.section-title, .section-subtitle, .about-text, .about-box, .project-card, .skill, .contact-content'
-    );
 
-    revealElements.forEach(element => {
-        element.classList.add('reveal');
-    });
-
-    const revealObserver = new IntersectionObserver(
-        (entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        },
-        {
-            threshold: 0.15
-        }
-    );
-
-    revealElements.forEach(element => {
-        revealObserver.observe(element);
-    });
-</script>
 </body>
 </html>
