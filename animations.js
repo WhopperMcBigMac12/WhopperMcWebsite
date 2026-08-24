@@ -225,8 +225,7 @@ function createShootingStar() {
     star.style.opacity = "0.8";
 
     star.style.transform =
-      `translate(${distance}vw, ${distance * 0.65}vh)
-             rotate(${angle}deg)`;
+      `rotate(${angle}deg) translateX(${distance}vw)`;
   });
 
   setTimeout(() => {
@@ -465,4 +464,73 @@ if (!prefersReducedMotion && supportsHeroParallax && heroContent && heroLogoMoti
   };
 
   updateHeroParallax();
+}
+
+/* =========================================================
+   IMAGE LIGHTBOX
+========================================================= */
+
+const lightboxImages = document.querySelectorAll(".hero-logo img");
+
+if (lightboxImages.length) {
+  const lightbox = document.createElement("div");
+  const lightboxImage = document.createElement("img");
+  const closeButton = document.createElement("button");
+  let activeTrigger;
+  let previousOverflow = "";
+
+  lightbox.className = "image-lightbox";
+  lightbox.setAttribute("role", "dialog");
+  lightbox.setAttribute("aria-modal", "true");
+  lightbox.setAttribute("aria-label", "Expanded image");
+  closeButton.className = "image-lightbox__close";
+  closeButton.type = "button";
+  closeButton.textContent = "Close";
+  lightbox.append(lightboxImage, closeButton);
+  document.body.appendChild(lightbox);
+
+  const closeLightbox = () => {
+    lightbox.classList.remove("is-open");
+    document.body.style.overflow = previousOverflow;
+    activeTrigger?.focus();
+  };
+
+  const openLightbox = (image) => {
+    activeTrigger = image;
+    previousOverflow = document.body.style.overflow;
+    lightboxImage.src = image.currentSrc || image.src;
+    lightboxImage.alt = image.alt;
+    lightbox.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+    closeButton.focus();
+  };
+
+  lightboxImages.forEach((image) => {
+    image.classList.add("image-lightbox-trigger");
+    image.setAttribute("role", "button");
+    image.setAttribute("tabindex", "0");
+    image.setAttribute("aria-label", `Expand ${image.alt || "image"}`);
+
+    image.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openLightbox(image);
+    });
+    image.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openLightbox(image);
+      }
+    });
+  });
+
+  closeButton.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+      closeLightbox();
+    }
+  });
 }

@@ -148,7 +148,7 @@ if (spaceBackground && !prefersReducedMotion) {
 
     requestAnimationFrame(() => {
       star.style.opacity = "0.8";
-      star.style.transform = `translate(${distance}vw, ${distance * 0.65}vh) rotate(${angle}deg)`;
+      star.style.transform = `rotate(${angle}deg) translateX(${distance}vw)`;
     });
 
     window.setTimeout(() => {
@@ -166,4 +166,73 @@ if (spaceBackground && !prefersReducedMotion) {
   };
 
   scheduleShootingStar();
+}
+
+/* =========================================================
+   SCREENSHOT LIGHTBOX
+========================================================= */
+
+const screenshots = document.querySelectorAll("main img");
+
+if (screenshots.length) {
+  const lightbox = document.createElement("div");
+  const lightboxImage = document.createElement("img");
+  const closeButton = document.createElement("button");
+  let activeTrigger;
+  let previousOverflow = "";
+
+  lightbox.className = "screenshot-lightbox";
+  lightbox.setAttribute("role", "dialog");
+  lightbox.setAttribute("aria-modal", "true");
+  lightbox.setAttribute("aria-label", "Expanded screenshot");
+  closeButton.className = "screenshot-lightbox__close";
+  closeButton.type = "button";
+  closeButton.textContent = "Close";
+  lightbox.append(lightboxImage, closeButton);
+  document.body.appendChild(lightbox);
+
+  const closeLightbox = () => {
+    lightbox.classList.remove("is-open");
+    document.body.style.overflow = previousOverflow;
+    activeTrigger?.focus();
+  };
+
+  const openLightbox = (image, trigger) => {
+    activeTrigger = trigger;
+    previousOverflow = document.body.style.overflow;
+    lightboxImage.src = image.currentSrc || image.src;
+    lightboxImage.alt = image.alt;
+    lightbox.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+    closeButton.focus();
+  };
+
+  screenshots.forEach((image) => {
+    const trigger = image.closest(".screenshot, .hero-image") || image;
+    trigger.classList.add("image-lightbox-trigger");
+    trigger.setAttribute("role", "button");
+    trigger.setAttribute("tabindex", "0");
+    trigger.setAttribute("aria-label", `Expand ${image.alt || "screenshot"}`);
+
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      openLightbox(image, trigger);
+    });
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openLightbox(image, trigger);
+      }
+    });
+  });
+
+  closeButton.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+      closeLightbox();
+    }
+  });
 }
