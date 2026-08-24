@@ -162,6 +162,45 @@ nav {
     animation: logoFloat 5s ease-in-out infinite;
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.35));
 }
+.hero-logo-motion {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    will-change: transform;
+}
+.hero-logo-motion img {
+    position: relative;
+    z-index: 1;
+}
+.logo-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+.logo-particle {
+    position: absolute;
+    width: var(--particle-size);
+    height: var(--particle-size);
+    left: var(--particle-x);
+    top: var(--particle-y);
+    border-radius: 50%;
+    background: #dcd5ff;
+    box-shadow: 0 0 8px rgba(124, 92, 255, 0.9);
+    opacity: 0.65;
+    animation: logoParticleFloat var(--particle-duration) ease-in-out var(--particle-delay) infinite alternate;
+}
+@keyframes logoParticleFloat {
+    from {
+        opacity: 0.2;
+        transform: translate3d(-3px, 4px, 0) scale(0.8);
+    }
+    to {
+        opacity: 0.8;
+        transform: translate3d(4px, -5px, 0) scale(1.1);
+    }
+}
 @keyframes logoFloat {
 0%, 100% {
 transform: translateY(0px);
@@ -260,16 +299,38 @@ section {
 }
 .project-card {
     display: block;
+    position: relative;
     background: #15151c;
     border: 1px solid #24242d;
     border-radius: 12px;
     overflow: hidden;
-    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    transform: translateY(var(--card-lift, 0)) perspective(900px) rotateX(var(--card-tilt-x, 0deg)) rotateY(var(--card-tilt-y, 0deg));
+    transform-style: preserve-3d;
+    transition: transform 0.18s ease-out, border-color 0.35s ease, box-shadow 0.35s ease;
+    will-change: transform;
 }
 .project-card:hover {
-    transform: translateY(-8px);
     border-color: #51428a;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+.project-card.is-tilting {
+    --card-lift: -8px;
+}
+.project-card.animate.visible {
+    transform: translateY(var(--card-lift, 0)) perspective(900px) rotateX(var(--card-tilt-x, 0deg)) rotateY(var(--card-tilt-y, 0deg));
+}
+.project-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(260px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(124, 92, 255, 0.22), transparent 62%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+.project-card.is-tilting::after {
+    opacity: 1;
 }
 .project-image {
     aspect-ratio: 16 / 9;
@@ -580,24 +641,6 @@ nav, .hero, section, footer {
     pointer-events: none;
     will-change: left, top;
 }
-.background-star {
-    position: absolute;
-    width: var(--size);
-    height: var(--size);
-    background: white;
-    border-radius: 50%;
-    opacity: var(--opacity);
-    animation: backgroundStarTwinkle var(--duration) ease-in-out var(--delay) infinite alternate;
-    will-change: opacity;
-}
-@keyframes backgroundStarTwinkle {
-0% {
-opacity: 0.25;
-}
-100% {
-opacity: 1;
-}
-}
 .shooting-star {
     position: absolute;
     width: 140px;
@@ -622,20 +665,51 @@ opacity: 1;
 }
 .background-star {
     position: absolute;
+
     width: var(--size);
     height: var(--size);
+
     background: white;
     border-radius: 50%;
+
     opacity: var(--opacity);
-    animation: backgroundStarTwinkle var(--duration) ease-in-out var(--delay) infinite alternate;
-    will-change: opacity;
+
+    transform:
+        translate(
+            var(--mouse-x, 0px),
+            calc(
+                var(--scroll-y, 0px) +
+                var(--mouse-y, 0px)
+            )
+        )
+        scale(var(--star-scale, 1));
+
+    animation:
+        backgroundStarTwinkle
+        var(--duration)
+        ease-in-out
+        var(--delay)
+        infinite
+        alternate;
+
+    will-change: transform, opacity;
+}
 .bright-star {
     box-shadow:
         0 0 4px rgba(255, 255, 255, 0.9),
         0 0 10px rgba(124, 92, 255, 0.6);
 
-    transform: scale(1.4);
-	z-index: 0
+    --star-scale: 1.4;
+    z-index: 0;
+}
+.nebula {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.8;
+    pointer-events: none;
+    will-change: transform;
+}
 .nebula-one {
     position: absolute;
 
@@ -668,7 +742,7 @@ opacity: 1;
         infinite alternate;
 
     will-change: transform;
-	z-index: 0
+    z-index: 0;
 }
 
 @keyframes nebulaFloat {
@@ -693,7 +767,7 @@ opacity: 1;
 }
 .nebula-two {
     width: 700px;
-	z-index: 0
+    z-index: 0;
     height: 700px;
 
     top: 45%;
@@ -735,8 +809,6 @@ opacity: 1;
             scale(0.95);
     }
 }
-}
-}
 @keyframes backgroundStarTwinkle {
 0% {
 opacity: 0.3;
@@ -744,22 +816,6 @@ opacity: 0.3;
 100% {
 opacity: 1;
 }
-}
-/* ==============================
-           SHOOTING STARS
-        ============================== */
-  
-.shooting-star::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 6px;
-    height: 6px;
-    background: white;
-    border-radius: 50%;
-    transform: translateY(-50%);
-    box-shadow: 0 0 5px rgba(255, 255, 255, 1), 0 0 12px rgba(124, 92, 255, 0.9);
 }
 </style>
 </head>
@@ -812,10 +868,12 @@ opacity: 1;
           Here's a collection of some of the things I've built. </p>
         <div class="buttons"> <a href="#projects" class="button"> View My Work </a> <a href="#contact" class="button button-outline"> Contact Me </a> </div>
       </div>
-      <div class="hero-logo"> <img
-                        src="images/logo.png"
-                        alt="WhopperMcBigMac Logo"
-                    > </div>
+      <div class="hero-logo">
+        <div class="hero-logo-motion">
+          <div class="logo-particles" aria-hidden="true"></div>
+          <img src="images/logo.png" alt="WhopperMcBigMac Logo">
+        </div>
+      </div>
     </div>
   </div>
 </section>

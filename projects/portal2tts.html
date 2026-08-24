@@ -210,7 +210,7 @@
     		overflow: hidden;
     		border: 1px solid #24242d;
 			align-content: center;
-			align-self: center
+			align-self: center;
 }
 
 		.video video {
@@ -219,7 +219,7 @@
     		display: block;
     		object-fit: cover;
 			align-content: center;
-			align-self: center
+			align-self: center;
 		}
 		.screenshot-grid .video:only-child {
     		grid-column: 1 / -1;
@@ -785,6 +785,133 @@ nav {
                     scale(0.6);
             }
         }
+        /* ==============================
+           SHARED PROJECT ANIMATIONS
+        ============================== */
+
+        .space-background {
+            z-index: 0;
+        }
+
+        nav,
+        main,
+        footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .space-background > .stars {
+            background: none;
+        }
+
+        .space-background > .shooting-star {
+            display: none;
+        }
+
+        .nebula {
+            position: absolute;
+            width: 760px;
+            height: 760px;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.45;
+            will-change: transform;
+        }
+
+        .nebula-one {
+            top: -260px;
+            right: -280px;
+            background: radial-gradient(circle, rgba(124, 92, 255, 0.18), transparent 68%);
+            animation: nebulaFloat 22s ease-in-out infinite alternate;
+        }
+
+        .nebula-two {
+            bottom: -340px;
+            left: -260px;
+            background: radial-gradient(circle, rgba(93, 63, 211, 0.15), transparent 70%);
+            animation: nebulaFloatTwo 28s ease-in-out infinite alternate;
+        }
+
+        @keyframes nebulaFloat {
+            from {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            to {
+                transform: translate3d(-80px, 60px, 0) scale(1.08);
+            }
+        }
+
+        @keyframes nebulaFloatTwo {
+            from {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            to {
+                transform: translate3d(90px, -60px, 0) scale(1.06);
+            }
+        }
+
+        .background-star {
+            position: absolute;
+            width: var(--size);
+            height: var(--size);
+            border-radius: 50%;
+            background: white;
+            opacity: var(--opacity);
+            transform: translate(var(--mouse-x, 0px), calc(var(--scroll-y, 0px) + var(--mouse-y, 0px)));
+            animation: backgroundStarTwinkle var(--duration) ease-in-out var(--delay) infinite alternate;
+            will-change: transform, opacity;
+        }
+
+        @keyframes backgroundStarTwinkle {
+            from {
+                opacity: calc(var(--opacity) * 0.45);
+            }
+
+            to {
+                opacity: var(--opacity);
+            }
+        }
+
+        .mouse-glow {
+            position: fixed;
+            width: 460px;
+            height: 460px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(124, 92, 255, 0.1) 10%, rgba(124, 92, 255, 0.04) 45%, transparent 72%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            will-change: left, top;
+        }
+
+        .project-shooting-star {
+            position: absolute;
+            width: 130px;
+            height: 2px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.85));
+            transform-origin: right center;
+            opacity: 0;
+            transition: transform var(--shooting-duration) linear, opacity 0.25s ease;
+        }
+
+        .project-shooting-star::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: white;
+            transform: translateY(-50%);
+            box-shadow: 0 0 5px white, 0 0 12px rgba(124, 92, 255, 0.9);
+        }
+
+        .reveal {
+            transition-delay: var(--reveal-delay, 0s);
+        }
     </style>
 </head>
 
@@ -795,7 +922,10 @@ nav {
 
     <div class="space-background" aria-hidden="true">
 
+        <div class="nebula nebula-one"></div>
+        <div class="nebula nebula-two"></div>
         <div class="stars"></div>
+        <div class="mouse-glow"></div>
 
         <span class="shooting-star star-1"></span>
         <span class="shooting-star star-2"></span>
@@ -887,7 +1017,8 @@ nav {
 
                             <a href="https://github.com/WhopperMcBigMac12/Portal2TTS"
                                class="button"
-                               target="_blank">
+                               target="_blank"
+                               rel="noopener noreferrer">
                                 View on GitHub
                             </a>
 
@@ -955,24 +1086,25 @@ nav {
                     </div>
 
                 </div>
-				<section class="screenshots">
 
-    <h2 style="text-align: center;">
-        Videos
-    </h2>
+                <div class="screenshots videos">
 
-    <div class="screenshot-grid">
+                    <h2 style="text-align: center;">
+                        Videos
+                    </h2>
 
-        <div class="video">
-            <video controls preload="metadata">
-                <source src="../videos/portal2tts-demo.mp4" type="video/mp4">
-                Your browser does not support HTML5 video.
-            </video>
-        </div>
+                    <div class="screenshot-grid">
 
-    </div>
+                        <div class="video">
+                            <video controls preload="metadata">
+                                <source src="../videos/portal2tts-demo.mp4" type="video/mp4">
+                                Your browser does not support HTML5 video.
+                            </video>
+                        </div>
 
-</section>
+                    </div>
+
+                </div>
 
             </div>
 
@@ -986,32 +1118,6 @@ nav {
         © 2026 WhopperMcBigMac. All rights reserved.
 
     </footer>
-<script>
-    const revealElements = document.querySelectorAll(
-        '.content-grid, .screenshots, .screenshot, .video'
-    );
-
-    revealElements.forEach(element => {
-        element.classList.add('reveal');
-    });
-
-    const revealObserver = new IntersectionObserver(
-        (entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        },
-        {
-            threshold: 0.12
-        }
-    );
-
-    revealElements.forEach(element => {
-        revealObserver.observe(element);
-    });
-</script>
+<script src="../project-animations.js"></script>
 </body>
 </html>

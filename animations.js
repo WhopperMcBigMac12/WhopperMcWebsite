@@ -27,9 +27,13 @@ const observer = new IntersectionObserver(
 
         const index = siblings.indexOf(element);
 
+        const staggerDelay = element.classList.contains("project-card")
+          ? index * 0.08
+          : index * 0.12;
+
         element.style.setProperty(
           "--animation-delay",
-          `${index * 0.12}s`
+          `${staggerDelay}s`
         );
 
         element.classList.add("visible");
@@ -129,7 +133,7 @@ function createBackgroundStars() {
         `${Math.random() * 100}%`;
 
       star.dataset.speed = layer.speed;
-
+      star.dataset.depth = (layer.speed * 1.5).toFixed(2);
       starContainer.appendChild(star);
     }
   });
@@ -176,8 +180,10 @@ function updateStarParallax() {
     const wrappedOffset =
       ((offset % 300) + 300) % 300 - 150;
 
-    star.style.transform =
-      `translateY(${wrappedOffset}px)`;
+    star.style.setProperty(
+    "--scroll-y",
+    `${wrappedOffset}px`
+);
   });
 
   requestAnimationFrame(updateStarParallax);
@@ -285,3 +291,178 @@ function animateMouseGlow() {
 }
 
 animateMouseGlow();
+/* =========================================================
+   MOUSE STAR PARALLAX
+========================================================= */
+
+const mouseParallaxStars =
+    document.querySelectorAll(".background-star");
+
+let targetMouseX = 0;
+let targetMouseY = 0;
+
+let currentMouseX = 0;
+let currentMouseY = 0;
+
+window.addEventListener("mousemove", (event) => {
+
+    targetMouseX =
+        (event.clientX / window.innerWidth - 0.5) * 2;
+
+    targetMouseY =
+        (event.clientY / window.innerHeight - 0.5) * 2;
+
+});
+
+
+function animateStarMouseParallax() {
+
+    currentMouseX +=
+        (targetMouseX - currentMouseX) * 0.04;
+
+    currentMouseY +=
+        (targetMouseY - currentMouseY) * 0.04;
+
+
+    mouseParallaxStars.forEach((star) => {
+
+        const speed =
+            parseFloat(star.dataset.speed);
+
+        const depth =
+			parseFloat(star.dataset.depth);
+
+		const mouseStrength =
+			depth * 18;
+
+        const x =
+            currentMouseX * mouseStrength;
+
+        const y =
+            currentMouseY * mouseStrength;
+
+        star.style.setProperty(
+            "--mouse-x",
+            `${x}px`
+        );
+
+        star.style.setProperty(
+            "--mouse-y",
+            `${y}px`
+        );
+
+    });
+
+
+    requestAnimationFrame(
+        animateStarMouseParallax
+    );
+}
+
+animateStarMouseParallax();
+
+/* =========================================================
+   PROJECT CARD TILT + CURSOR GLOW
+========================================================= */
+
+const prefersReducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
+
+if (!prefersReducedMotion && window.matchMedia("(hover: hover)").matches) {
+  document.querySelectorAll(".project-card").forEach((card) => {
+    let animationFrame;
+    let pointerX = 0;
+    let pointerY = 0;
+
+    const updateCard = () => {
+      const rect = card.getBoundingClientRect();
+      const x = (pointerX - rect.left) / rect.width;
+      const y = (pointerY - rect.top) / rect.height;
+      const tilt = 4;
+
+      card.style.setProperty("--card-tilt-x", `${(0.5 - y) * tilt}deg`);
+      card.style.setProperty("--card-tilt-y", `${(x - 0.5) * tilt}deg`);
+      card.style.setProperty("--glow-x", `${x * 100}%`);
+      card.style.setProperty("--glow-y", `${y * 100}%`);
+      animationFrame = undefined;
+    };
+
+    card.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "mouse") return;
+
+      card.classList.add("is-tilting");
+    });
+
+    card.addEventListener("pointermove", (event) => {
+      if (event.pointerType !== "mouse") return;
+
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+
+      if (!animationFrame) {
+        animationFrame = requestAnimationFrame(updateCard);
+      }
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.classList.remove("is-tilting");
+      card.style.setProperty("--card-tilt-x", "0deg");
+      card.style.setProperty("--card-tilt-y", "0deg");
+    });
+  });
+}
+
+/* =========================================================
+   HERO PARALLAX + LOGO PARTICLES
+========================================================= */
+
+const heroContent = document.querySelector(".hero-content");
+const heroLogoMotion = document.querySelector(".hero-logo-motion");
+const logoParticles = document.querySelector(".logo-particles");
+const supportsHeroParallax = window.matchMedia(
+  "(hover: hover) and (min-width: 801px)"
+).matches;
+
+if (!prefersReducedMotion && logoParticles) {
+  const particleCount = 11;
+
+  for (let index = 0; index < particleCount; index += 1) {
+    const particle = document.createElement("span");
+    const size = (Math.random() * 2 + 1.5).toFixed(1);
+    const duration = (Math.random() * 3 + 3.5).toFixed(2);
+
+    particle.className = "logo-particle";
+    particle.style.setProperty("--particle-size", `${size}px`);
+    particle.style.setProperty("--particle-x", `${(Math.random() * 88 + 6).toFixed(1)}%`);
+    particle.style.setProperty("--particle-y", `${(Math.random() * 82 + 8).toFixed(1)}%`);
+    particle.style.setProperty("--particle-duration", `${duration}s`);
+    particle.style.setProperty("--particle-delay", `-${(Math.random() * 4).toFixed(2)}s`);
+
+    logoParticles.appendChild(particle);
+  }
+}
+
+if (!prefersReducedMotion && supportsHeroParallax && heroContent && heroLogoMotion) {
+  let targetX = 0;
+  let targetY = 0;
+  let currentX = 0;
+  let currentY = 0;
+
+  window.addEventListener("mousemove", (event) => {
+    targetX = event.clientX / window.innerWidth - 0.5;
+    targetY = event.clientY / window.innerHeight - 0.5;
+  }, { passive: true });
+
+  const updateHeroParallax = () => {
+    currentX += (targetX - currentX) * 0.06;
+    currentY += (targetY - currentY) * 0.06;
+
+    heroContent.style.transform = `translate3d(${-currentX * 12}px, ${-currentY * 12}px, 0)`;
+    heroLogoMotion.style.transform = `translate3d(${currentX * 20}px, ${currentY * 20}px, 0)`;
+
+    requestAnimationFrame(updateHeroParallax);
+  };
+
+  updateHeroParallax();
+}
